@@ -30,10 +30,10 @@ const Card = (article) => {
   headline.classList.add( "headline" );
   author.classList.add( "author" );
   imgContain.classList.add( "img-container" );
-
-  headline.textContent = article.headline;
-  span.textContent = article.author;
-  img.src = article.authorPhoto;
+ 
+  headline.textContent = `${ article.headline }`;
+  span.textContent = `${ article.authorName }`;
+  img.src = `${ article.authorPhoto }`;
 
   // appending the info, creating the hierarchy:
   artCard.appendChild( headline );
@@ -63,25 +63,25 @@ const cardAppender = (selector) => {
   axios.get('https://lambda-times-api.herokuapp.com/articles')
       .then((response)=>{  // creating a card from each and every article obj
           const bsArt = response.data.articles.bootstrap;
-              bsArt.forEach((bsArt)=>{
-                document.querySelector(selector).appendChild(Card(bsArt)); 
+              bsArt.forEach((bsArticle)=>{
+                document.querySelector(selector).appendChild(Card(bsArticle)); 
           });
           const jsArt = response.data.articles.javascript;
-              jsArt.forEach((jsArt)=>{
-                document.querySelector(selector).appendChild(Card(jsArt));
+              jsArt.forEach((jsArticle)=>{
+                document.querySelector(selector).appendChild(Card(jsArticle));
           });
           const jqueryArt = response.data.articles.jquery;
-              jqueryArt.forEach((jqueryArt)=>{
-                document.querySelector(selector).appendChild(Card(jqueryArt));
+              jqueryArt.forEach((jqueryArticle)=>{
+                document.querySelector(selector).appendChild(Card(jqueryArticle));
           });
           const nodeArt = response.data.articles.node;
-              nodeArt.forEach((nodeArt)=>{
-                document.querySelector(selector).appendChild(Card(nodeArt));
+              nodeArt.forEach((nodeArticle)=>{
+                document.querySelector(selector).appendChild(Card(nodeArticle));
           });
           const techArt = response.data.articles.technology;
-              techArt.forEach((techArt)=>{
-                document.querySelector(selector).appendChild(Card(techArt));
-          }); // check your S's, also do not call your const and variable to pass in the same // luckily JS is smart and separates that but in the future, this is a NONO!
+              techArt.forEach((techArticle)=>{
+                document.querySelector(selector).appendChild(Card(techArticle));
+          }); // check your S's, also do not call your const/variable to pass in the same // luckily JS is smart and separates that but in the future, this is a NONO!
       })
       .catch((error)=>{
           console.log('error', error)

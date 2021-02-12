@@ -1,5 +1,3 @@
-const headInject = document.createElement( "header-container" );
-
 const Header = (title, date, temp) => {
   // TASK 1
   // ---------------------
@@ -24,15 +22,17 @@ const Header = (title, date, temp) => {
   dateSpan.classList.add( "date" );
   tempSpan.classList.add( "temp" );
 
-  dateSpan.textContext = date;
-  titleH1.textContext = title;
-  tempSpan.textContext = temp;
+  dateSpan.textContext = `${ date }`;
+  titleH1.textContext = `${ title }`;
+  tempSpan.textContext = `${ temp }`;
 
   // Append the info, creating the hierarchy:
   headDiv.appendChild( dateSpan );
   headDiv.appendChild( titleH1 );
   headDiv.appendChild( tempSpan );
-  headInject.appendChild( headDiv );
+
+
+  return headDiv;
 }
 
 const headerAppender = (selector) => {
@@ -41,10 +41,11 @@ const headerAppender = (selector) => {
   // Implement this function taking a css selector as its only argument.
   // It should create a header using the Header component above, passing arguments of your choosing.
   // It should append the header to the element in the DOM that matches the given selector.
+  // "header-container"
+  const headInject = document.querySelector(`${ selector }`);
 
   // Append this (Header(title, date, temp))
-  const headerInfo = document.querySelector( selector );
-  headerInfo.appendChild(Header( "Timmy Times", "February 12th, 2021", "-173°K"));
+  headInject.appendChild(Header( "Timmy Times", "February 12th, 2021", "-173°K")); // this isn't dry coding
 }
 
 export { Header, headerAppender }
