@@ -16,7 +16,39 @@ const Card = (article) => {
   //     <span>By { authorName }</span>
   //   </div>
   // </div>
-  //
+
+  // Instantiating the Elements:
+  const artCard = document.createElement( "div" );
+  const headline = document.createElement( "div" );
+  const author = document.createElement( "div" );
+  const imgContain = document.createElement( "div" );
+  const img = document.createElement( "img" );
+  const span = document.createElement( "span" );
+
+  // setting class names, attributes, context:
+  artCard.classList.add( "card" );
+  headline.classList.add( "headline" );
+  author.classList.add( "author" );
+  imgContain.classList.add( "img-container" );
+
+  headline.textContent = article.headline;
+  span.textContent = article.author;
+  img.src = article.authorPhoto;
+
+  // appending the info, creating the hierarchy:
+  artCard.appendChild( headline );
+  artCard.appendChild( author );
+  author.appendChild( imgContain );
+  imgContain.appendChild( img );
+  author.appendChild( span );
+
+  // events
+  artCard.addEventListener( "click", (evt) => {
+    console.log( article.headline );
+  });
+
+  // return
+  return artCard;
 }
 
 const cardAppender = (selector) => {
@@ -28,6 +60,32 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+  axios.get('https://lambda-times-api.herokuapp.com/articles')
+      .then((response)=>{  // creating a card from each and every article obj
+          const bsArt = response.data.articles.bootstrap;
+              bsArt.forEach((bsArt)=>{
+                document.querySelector(selector).appendChild(Card(bsArt)); 
+          });
+          const jsArt = response.data.articles.javascript;
+              jsArt.forEach((jsArt)=>{
+                document.querySelector(selector).appendChild(Card(jsArt));
+          });
+          const jqueryArt = response.data.articles.jquery;
+              jqueryArt.forEach((jqueryArt)=>{
+                document.querySelector(selector).appendChild(Card(jqueryArt));
+          });
+          const nodeArt = response.data.articles.node;
+              nodeArt.forEach((nodeArt)=>{
+                document.querySelector(selector).appendChild(Card(nodeArt));
+          });
+          const techArt = response.data.articles.technology;
+              techArt.forEach((techArt)=>{
+                document.querySelector(selector).appendChild(Card(techArt));
+          }); // check your S's, also do not call your const and variable to pass in the same // luckily JS is smart and separates that but in the future, this is a NONO!
+      })
+      .catch((error)=>{
+          console.log('error', error)
+      })
 }
 
 export { Card, cardAppender }
